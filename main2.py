@@ -10,20 +10,41 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication
 import sys
 from design import Ui_MainWindow
+from SSHConnect import SSH_operation
+import subprocess
+import paramiko
+
 
 class AppWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
+        self.ssh_obj = SSH_operation()
         self.ui.connect_btn.clicked.connect(self.ConnectButtonClicked)
+        # self.ui.send_btn.clicked.connect(self.SendButtonClicked)
         self.show()
+        self.ipp = self.ui.ssh_ip.text()
 
 
 
-    @staticmethod
-    def ConnectButtonClicked(self, ipaddr):
+    def ConnectButtonClicked(self):
+        ip = self.ui.ssh_ip.text()
+        user = self.ui.ssh_user.text()
+        passwd = self.ui.ssh_pass.text()
+        print(ip + " " + user + " " + passwd)
+        self.ssh_obj.ssh_con(ip, user, passwd)
+        self.ssh_obj.ssh_command("pwd")
+
+
+    def SendButtonClicked(self):
+        hostn_send = self.ui.hostn_text.text()
+        ip_send = self.ui.ip_text.text()
+        subnet_send = self.ui.subnet_text.text()
+        gateway_send = self.ui.gateway_text.text()
+        print(hostn_send + " " + ip_send + " " + subnet_send + " " + gateway_send)
+
+
 
 
 
