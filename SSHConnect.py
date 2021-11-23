@@ -1,5 +1,5 @@
 import paramiko
-output_file = "paramiko.log"
+# output_file = "paramiko.log"
 
 
 class SSH_operation:
@@ -14,16 +14,15 @@ class SSH_operation:
         self.client.connect(hostname=hostn, username=usern, password=passwd)
 
     def ssh_command(self, command):
-        try:
+
 
             (stdin, stdout, stderr) = self.client.exec_command(command)
-            self.cmd_output = stdout.read()
+            self.cmd_output = stdout.readlines()
             print("Log:::::", command, self.cmd_output)
-            with open(output_file, "w+") as file:
-                file.write(str(self.cmd_output))
-            return output_file
-        finally:
-            self.client.close()
+            # with open(output_file, "w+") as file:
+            #     file.write(str(self.cmd_output))
+            # return output_file
+
 
 # ssh_obj = SSH_operation()
 # ssh_obj.ssh_con("pwd")
